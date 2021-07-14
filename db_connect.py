@@ -2,6 +2,9 @@
 import pymysql
 from _gui import *
 
+def db_con_stat():
+    print('db con stat test')
+
 data_array = ""
 
 def db_connect(sql):

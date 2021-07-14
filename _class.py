@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 class Cup:
     def __init__(self, t):
         self.count = t

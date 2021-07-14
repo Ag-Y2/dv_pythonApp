@@ -1,12 +1,20 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
+from matplotlib.figure import Figure
 from pymysql import cursors
 from _class import *
-from _gui import *
+#from _gui import *
+from tkinter import *
 from db_connect import *
 from db_matplot import *
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+from matplotlib.figure import Figure
 import json
 
+'''
+http://www.gisdeveloper.co.kr/?p=8343
 
+qt5 over tkinter 
+'''
 
 get_cup = Cup(555)
 print('=======data array len=======')
@@ -50,6 +58,7 @@ def sql_mall():
             #print(f'{mallName}: {qty} ')
             #mall.set_mallname_list(mallName)
             #mall.set_mallqty_list(qty)
+            #mallName = unicode(mallName, "utf-8")
             mall_nameList.append(mallName)
             mall_qtyList.append(qty)
 
@@ -59,11 +68,49 @@ def sql_mall():
 
 def init_run():
     print('dfdf')
-    sql_mall()
+    init_gui()
+    
     
 if __name__ == "__main__":
     init_run()
-    barchart()
+    #barchart()
     #db_connect()
     #init_gui()
     #db_connect()
+
+
+
+
+count = 0
+window = Tk()
+root = window
+frame = Frame(window)
+
+sb_xyis = Scrollbar(window, orient="horizontal")
+sb_xyis.pack(side = BOTTOM, fill = X)
+
+window.title("gui interface")
+window.geometry("640x400+300+50")
+window.resizable(False, False)
+
+
+label=Label(window, text="hi, there")
+label.pack()
+
+
+label_count= Label(window, text=0)
+label_count.pack()
+
+def countUp():
+    global count
+    count += 1
+    label_count.config(text=str(count))
+    #add_to_list()
+
+
+button = Button(window, overrelief="solid", width=15, command=sql_mall, repeatdelay=1000, repeatinterval=100)
+button.pack()
+
+frame.pack()
+window.mainloop()
+

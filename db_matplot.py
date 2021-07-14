@@ -1,12 +1,18 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import matplotlib.pyplot as plt
 import numpy as np
 from _class import *
+from matplotlib import font_manager, rc
+
+font_path = "C:/Windows/Fonts/gulim.ttc"
+font = font_manager.FontProperties(fname=font_path).get_name()
+rc('font', family=font)
 
 def barchart():
+
     #labels = ['G1', 'G2', 'G3', 'G4', 'G5']
     #mal_quantity = [20, 34, 30, 35, 27]
-    mall = Mall()
+
     labels = mall_nameList
     mal_quantity = mall_qtyList
 

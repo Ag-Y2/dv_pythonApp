@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 from tkinter import *
+
 #import tkinter
 '''
 from tkinter import *
@@ -22,7 +23,6 @@ def init_gui():
     label=Label(window, text="hi, there")
     label.pack()
 
-
     label_count= Label(window, text=0)
     label_count.pack()
 
@@ -31,6 +31,7 @@ def init_gui():
         count += 1
         label_count.config(text=str(count))
         #add_to_list()
+ 
 
     button = Button(window, overrelief="solid", width=15, command=countUp, repeatdelay=1000, repeatinterval=100)
     button.pack()
