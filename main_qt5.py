@@ -7,6 +7,7 @@ from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as Navigatio
 import numpy as np
 from db_connect import *
 from matplotlib import font_manager, rc
+from datetime import date
 
 font_path = "C:/Windows/Fonts/gulim.ttc"
 font = font_manager.FontProperties(fname=font_path).get_name()
@@ -23,13 +24,23 @@ class MyWindow(QWidget):
     self.setWindowTitle("PyChart Viewer v0.1")
     self.setWindowIcon(QIcon('icon.png'))
 
+    self.lineEdit_startdate = QLineEdit()
+    self.lineEdit_startdate.setPlaceholderText('type start date')
+    self.lineEdit_enddate = QLineEdit()
+    self.lineEdit_enddate.setPlaceholderText('type end date')
+
     self.lineEdit = QLineEdit()
+    self.lineEdit.setPlaceholderText('type id *req*')
+
     self.pushButton0 = QPushButton("search")
     self.pushButton0.clicked.connect(self.pushButtonClicked_searchId)
-    self.pushButton = QPushButton("차트그리기")
+    self.pushButton = QPushButton("차트그리기 in canvas")
     self.pushButton.clicked.connect(self.pushButtonClicked)
-    self.pushButton1 = QPushButton("차트그리기1")
+    self.pushButton1 = QPushButton("상품 매장별 비교")
     self.pushButton1.clicked.connect(self.pushButtonClicked1)
+    self.pushButton_settext = QPushButton("set text")
+    self.pushButton_settext.clicked.connect(self.pushButton_pushButton_settext_click)
+
 
     self.fig = plt.Figure()
     self.canvas = FigureCanvas(self.fig)
@@ -40,10 +51,13 @@ class MyWindow(QWidget):
 
     # Right Layout
     rightLayout = QVBoxLayout()
+    rightLayout.addWidget(self.lineEdit_startdate)
+    rightLayout.addWidget(self.lineEdit_enddate)
     rightLayout.addWidget(self.lineEdit)
     rightLayout.addWidget(self.pushButton0)
     rightLayout.addWidget(self.pushButton)
     rightLayout.addWidget(self.pushButton1)
+    rightLayout.addWidget(self.pushButton_settext)
     rightLayout.addStretch(1)
 
     layout = QHBoxLayout()
@@ -53,6 +67,7 @@ class MyWindow(QWidget):
     layout.setStretchFactor(rightLayout, 0)
 
     self.setLayout(layout)
+  ###########setupUI###########
 
   def pushButtonClicked(self):
     print(self.lineEdit.text())
@@ -62,14 +77,12 @@ class MyWindow(QWidget):
     ax.plot([0, 1, 2], [1, 5, 3], '-')
 
     self.canvas.draw()
+  ################pushButtonClicked################
 
   def pushButtonClicked_searchId(self):
     print('pushButtonClicked_searchId')
     print(self.lineEdit.text())
-
-
-
-
+  ############## /pushButtonClicked_searchId ############
 
   def pushButtonClicked1(self):
     print('btn1')
@@ -79,12 +92,22 @@ class MyWindow(QWidget):
     db_con_stat()
 
     #query
+    start_date = self.lineEdit_startdate.text()
+    end_date = self.lineEdit_enddate.text()\
+
+    if not end_date:
+      print('stirng is empty')
+      today = date.today()
+      today_date = 
+    else:
+      print('string is not empty')
+    
     product_no = self.lineEdit.text()
-    date = '2021-01-09'
+    enddate = '2021-01-09'
     sql = f"""
       SELECT mall, COUNT(mall) AS mallCount, product_no, CAST(sum(qty) as SIGNED) AS quantity , datetime
       FROM `out` 
-      WHERE product_no = {product_no} and DATE(datetime) > DATE('{date}') 
+      WHERE product_no = {product_no} and DATE(datetime) > DATE('{enddate}') 
       GROUP BY mall, product_no
       """
     #db result
@@ -123,7 +146,14 @@ class MyWindow(QWidget):
     fig.tight_layout()
 
     plt.show()
+  ############## /pushButtonClicked1 ############
 
+  def pushButton_pushButton_settext_click(self):
+    print('pushButton_pushButton_settext_click')
+    self.canvas.pack()
+    self.canvas.create_text(150, 100, text= "text test")
+
+  ############## /pushButton_pushButton_settext_click ############
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
