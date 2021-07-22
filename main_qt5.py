@@ -38,8 +38,12 @@ class MyWindow(QWidget):
     self.pushButton.clicked.connect(self.pushButtonClicked)
     self.pushButton1 = QPushButton("상품 매장별 비교 date")
     self.pushButton1.clicked.connect(self.pushButtonClicked1)
+    self.pushButton1.clicked.connect(self.pbc1_draw_oncanve)
     self.pushButton_settext = QPushButton("set text")
     self.pushButton_settext.clicked.connect(self.pushButton_pushButton_settext_click)
+  
+
+    
 
 
     self.fig = plt.Figure()
@@ -216,8 +220,66 @@ class MyWindow(QWidget):
     fig.tight_layout()
 
     plt.show()
+
+
+
   ############## /pushButtonClicked1 ############
 
+  def pbc1_draw_oncanve(self):
+    print('will try to draw')
+    print(self.lineEdit.text())
+    start_date = self.lineEdit_startdate.text()
+    end_date = self.lineEdit_enddate.text()
+    product_no = self.lineEdit.text()
+
+    today = date.today()
+
+    if not end_date:
+      print('stirng is empty')
+      
+      today_date = today.strftime("%Y-%m-%d")
+      enddate = today_date
+      print(today_date)
+    else:
+      print('string is not empty')
+      enddate = end_date
+    
+    if not start_date:
+      today_date = today.strftime("%Y-%m-%d")
+      start_date = today_date
+
+    sql = f"""
+      select DATE_FORMAT(DATE(datetime), '%Y-%m') AS month, CAST(sum(qty) as SIGNED) AS quantity
+      FROM `out`
+      WHERE product_no = {product_no} and DATE(datetime) BETWEEN '{start_date}'  and '{enddate}'
+      group by month
+
+      """
+
+    list = db_connect(sql)
+    month_List = []
+    qty_List = []
+
+    if (len(list) > 0):
+      print('listing data')
+      for i in list:
+        month = i.get('month')
+        qty = i.get('quantity')
+        month_List.append(month)
+        qty_List.append(qty)
+
+    self.fig.clear()
+    #self.addToolBar(NavigationToolbar(self.canvas, self))
+    ax = self.fig.subplots()
+    #ax.plot([0, 1, 2], [1, 5, 3], '-')  , color='blue'
+    ax.plot(month_List, qty_List, marker='o', linestyle='solid')
+    #ax.xlabel('month')
+    #ax.ylabel('qty')
+
+    self.canvas.draw()
+
+
+  
   def pushButton_pushButton_settext_click(self):
     print('pushButton_pushButton_settext_click')
     rowPosition = self.tableWidget.rowCount()

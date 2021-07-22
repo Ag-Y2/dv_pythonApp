@@ -1,0 +1,3 @@
+pip install pyinstaller  
+
+ pyinstaller .\main_qt5.py
