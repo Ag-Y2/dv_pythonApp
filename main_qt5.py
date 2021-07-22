@@ -7,7 +7,7 @@ from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as Navigatio
 import numpy as np
 from db_connect import *
 from matplotlib import font_manager, rc
-from datetime import date
+from datetime import date, datetime
 
 font_path = "C:/Windows/Fonts/gulim.ttc"
 font = font_manager.FontProperties(fname=font_path).get_name()
@@ -166,7 +166,13 @@ class MyWindow(QWidget):
     
     if not start_date:
       today_date = today.strftime("%Y-%m-%d")
-      start_date = f'{today.year - 1}-{today.month}-{today.day}'
+      if today.month < 10:
+        mon = f'0{today.month}'
+
+      start_date = f'{today.year - 1}-{mon}-{today.day}'
+      print('year ago from today')
+      print(start_date)
+
 
     #enddate = '2021-01-09'
     #sql = f"""
