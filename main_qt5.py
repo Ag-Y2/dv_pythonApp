@@ -166,7 +166,7 @@ class MyWindow(QWidget):
     
     if not start_date:
       today_date = today.strftime("%Y-%m-%d")
-      start_date = today_date
+      start_date = f'{today.year - 1}-{today.month}-{today.day}'
 
     #enddate = '2021-01-09'
     #sql = f"""
@@ -272,6 +272,7 @@ class MyWindow(QWidget):
     #self.addToolBar(NavigationToolbar(self.canvas, self))
     ax = self.fig.subplots()
     #ax.plot([0, 1, 2], [1, 5, 3], '-')  , color='blue'
+    
     ax.plot(month_List, qty_List, marker='o', linestyle='solid')
     #ax.xlabel('month')
     #ax.ylabel('qty')

@@ -14,9 +14,9 @@ Types if import:
 IMPORTANT: Do NOT post this list to the issue-tracker. Use it as a basis for
            yourself tracking down the missing module. Thanks!
 
-missing module named _posixsubprocess - imported by subprocess (optional), multiprocessing.util (delayed)
+missing module named _posixsubprocess - imported by multiprocessing.util (delayed), subprocess (optional)
 missing module named grp - imported by shutil (optional), tarfile (optional), pathlib (delayed, optional), subprocess (optional), distutils.archive_util (optional)
-missing module named pwd - imported by posixpath (delayed, conditional), shutil (optional), tarfile (optional), pathlib (delayed, conditional, optional), subprocess (optional), http.server (delayed, optional), webbrowser (delayed), netrc (delayed, conditional), getpass (delayed), distutils.util (delayed, conditional, optional), distutils.archive_util (optional)
+missing module named pwd - imported by posixpath (delayed, conditional), shutil (optional), tarfile (optional), pathlib (delayed, conditional, optional), http.server (delayed, optional), webbrowser (delayed), netrc (delayed, conditional), getpass (delayed), distutils.util (delayed, conditional, optional), subprocess (optional), distutils.archive_util (optional)
 missing module named _posixshmem - imported by multiprocessing.resource_tracker (conditional), multiprocessing.shared_memory (conditional)
 missing module named multiprocessing.set_start_method - imported by multiprocessing (top-level), multiprocessing.spawn (top-level)
 missing module named multiprocessing.get_start_method - imported by multiprocessing (top-level), multiprocessing.spawn (top-level)
@@ -129,7 +129,7 @@ missing module named six.moves.range - imported by six.moves (top-level), dateut
 missing module named six.moves.zip - imported by six.moves (top-level), cycler (top-level)
 missing module named StringIO - imported by PyInstaller.lib.modulegraph._compat (conditional), PyInstaller.lib.modulegraph.zipio (conditional), setuptools._vendor.six (conditional), six (conditional), pkg_resources._vendor.six (conditional)
 missing module named dateutil.tz.tzfile - imported by dateutil.tz (top-level), dateutil.zoneinfo (top-level)
-missing module named olefile - imported by PIL.MicImagePlugin (top-level), PIL.FpxImagePlugin (top-level)
+missing module named olefile - imported by PIL.FpxImagePlugin (top-level), PIL.MicImagePlugin (top-level)
 missing module named IPython - imported by PIL.ImageShow (optional), matplotlib.backend_bases (delayed), matplotlib.pyplot (delayed, conditional, optional)
 missing module named 'PySide6.QtGui' - imported by PIL.ImageQt (conditional, optional)
 missing module named 'PyQt6.QtGui' - imported by PIL.ImageQt (conditional, optional)
