@@ -1,3 +1,6 @@
+------------------------------------------------------------------------
+this code can draw grap on to canvase
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
@@ -45,19 +48,7 @@ class MyWindow(QWidget):
     self.fig = plt.Figure()
     self.canvas = FigureCanvas(self.fig)
 
-    #left layout
-    self.tableWidget = QTableWidget()
-    #self.tableWidget.setGeometry(100, 200, 1400, 1400)
-    self.tableWidget.setRowCount(1)
-    self.tableWidget.setColumnCount(5)
-    self.tableWidget.setItem(0,0, QTableWidgetItem('c1'))
-    self.tableWidget.setItem(0,1, QTableWidgetItem('c2'))
-    self.tableWidget.setItem(0,2, QTableWidgetItem('c3'))
-    self.tableWidget.setItem(0,3, QTableWidgetItem('c4'))
-    self.tableWidget.setItem(0,4, QTableWidgetItem('c5'))
-
     leftLayout = QVBoxLayout()
-    leftLayout.addWidget(self.tableWidget)
     leftLayout.addWidget(self.canvas)
     leftLayout.addWidget(NavigationToolbar(self.canvas, self))
 
@@ -94,45 +85,8 @@ class MyWindow(QWidget):
   def pushButtonClicked_searchId(self):
     print('pushButtonClicked_searchId')
     print(self.lineEdit.text())
-    sql = f"""
-    SELECT ID, productName , middleoption, lastOption, productCode
-    FROM products
-    WHERE productCode LIKE '%{self.lineEdit.text()}%'
-    """
-
-    print(sql)
-
-    list = db_connect(sql)
-    
-    if (len(list) > 0):
-      coutrow = self.tableWidget.rowCount()
-      for x in range (0 , coutrow):
-        self.tableWidget.removeRow(x)
-
-      #self.tableWidget.clear()
-      for i in list:
-        rowPosition = self.tableWidget.rowCount()
-        self.tableWidget.insertRow(rowPosition)
-
-        id = i.get('ID')
-        pid = str(id)
-        print(id)
-        product_name = i.get('productName')
-        middle_option = i.get('middleoption')
-        last_option = i.get('lastOption')
-        product_code = i.get('productCode')
-
-        self.tableWidget.setItem(rowPosition,0, QTableWidgetItem(pid))
-        self.tableWidget.setItem(rowPosition,1, QTableWidgetItem(product_name))
-        self.tableWidget.setItem(rowPosition,2, QTableWidgetItem(middle_option))
-        self.tableWidget.setItem(rowPosition,3, QTableWidgetItem(last_option))
-        self.tableWidget.setItem(rowPosition,4, QTableWidgetItem(product_code))
-
     self.fig.clear()
     self.canvas.draw()
-
-    
-
 
   ############## /pushButtonClicked_searchId ############
 
@@ -179,7 +133,7 @@ class MyWindow(QWidget):
       GROUP BY mall, product_no
       """
 
-    #print(sql)
+    print(sql)
     #db result   39709198
     list = db_connect(sql)
 
@@ -220,9 +174,8 @@ class MyWindow(QWidget):
 
   def pushButton_pushButton_settext_click(self):
     print('pushButton_pushButton_settext_click')
-    rowPosition = self.tableWidget.rowCount()
-    self.tableWidget.insertRow(rowPosition)
-    self.tableWidget.setItem(rowPosition,4, QTableWidgetItem('c5'))
+    self.canvas.pack()
+    self.canvas.create_text(150, 100, text= "text test")
 
   ############## /pushButton_pushButton_settext_click ############
 
@@ -235,3 +188,4 @@ if __name__ == "__main__":
 
 
 #https://wikidocs.net/5251
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
