@@ -59,6 +59,7 @@ class MyWindow(QWidget):
     self.tableWidget.setItem(0,2, QTableWidgetItem('c3'))
     self.tableWidget.setItem(0,3, QTableWidgetItem('c4'))
     self.tableWidget.setItem(0,4, QTableWidgetItem('c5'))
+    self.tableWidget.doubleClicked.connect(self.tableW_doub_click)
 
     leftLayout = QVBoxLayout()
     leftLayout.addWidget(self.tableWidget)
@@ -85,6 +86,17 @@ class MyWindow(QWidget):
     self.setLayout(layout)
   ###########setupUI###########
 
+  def tableW_doub_click(self):
+    row = self.tableWidget.currentIndex().row()
+    column = self.tableWidget.currentIndex().column()
+    cell = self.tableWidget.item(row, column)
+
+    if cell is not None:
+      self.lineEdit.setText(cell.text())
+      print(cell.text())
+    else:
+      print('cell is null')
+
   def pushButtonClicked(self):
     print(self.lineEdit.text())
     self.fig.clear()
@@ -107,7 +119,11 @@ class MyWindow(QWidget):
     print(sql)
 
     list = db_connect(sql)
-    
+
+    if list == "error":
+      print('error')
+      return 
+
     if (len(list) > 0):
       coutrow = self.tableWidget.rowCount()
       for x in range (0 , coutrow):
@@ -170,8 +186,8 @@ class MyWindow(QWidget):
         mon = f'0{today.month}'
 
       start_date = f'{today.year - 1}-{mon}-{today.day}'
-      print('year ago from today')
-      print(start_date)
+      start_date = start_date
+
 
 
     #enddate = '2021-01-09'
@@ -189,10 +205,13 @@ class MyWindow(QWidget):
       GROUP BY mall, product_no
       """
 
-    #print(sql)
+    print(sql)
     #db result   39709198
     list = db_connect(sql)
 
+    if list == "error":
+      print('error')
+      return 
     #allocat data
     mall_nameList = []
     mall_qtyList = []
@@ -252,7 +271,11 @@ class MyWindow(QWidget):
     
     if not start_date:
       today_date = today.strftime("%Y-%m-%d")
-      start_date = today_date
+      if today.month < 10:
+        mon = f'0{today.month}'
+
+      start_date = f'{today.year - 1}-{mon}-{today.day}'
+      start_date = start_date
 
     sql = f"""
       select DATE_FORMAT(DATE(datetime), '%Y-%m') AS month, CAST(sum(qty) as SIGNED) AS quantity
@@ -263,6 +286,11 @@ class MyWindow(QWidget):
       """
 
     list = db_connect(sql)
+
+    if list == "error":
+      print('error')
+      return 
+
     month_List = []
     qty_List = []
 

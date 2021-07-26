@@ -7,6 +7,10 @@ def db_con_stat():
 
 data_array = ""
 
+def db_error_mess(e):
+    print(e)
+
+
 def db_connect(sql):
     print('db connect init')
     conn = None
@@ -28,7 +32,17 @@ def db_connect(sql):
     
     #sql = sql_count_by_mall
 
-    curs.execute(sql)
+    try:
+        curs.execute(sql)
+    except Exception as e:
+        print('got error and printing out error message ++ conn close')
+        print(e)
+        db_error_mess(e)
+        conn.close()
+        return "error"
+
+        
+
     row = curs.fetchall()
     list_row = list(row)
 
