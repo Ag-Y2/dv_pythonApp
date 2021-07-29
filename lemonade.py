@@ -1,12 +1,13 @@
 import tensorflow as tf
 import pandas as pd
+import matplotlib.pyplot as plt
 
 #filepath = "https://raw.githubusercontent.com/blackdew/tensorflow1/master/csv/lemonade.csv"
-filepath = "./lemonade.csv"
+filepath = './testlist.csv'#"./lemonade.csv"
 data = pd.read_csv(filepath)
 data.head()
 
-independ = data[['온도']]
+independ = data[['가격']]#data[['온도']]
 depend = data[['판매량']]
 print(independ.shape, depend.shape)
 
@@ -25,9 +26,25 @@ epochs ==> 학습 횟수
 verbose ==> 학습 도중 표시안함
 '''
 
-model.fit(independ, depend, epochs=10000, verbose=0)
-model.fit(independ, depend, epochs=10)
 
-
+model.fit(independ, depend, epochs=1000, verbose=0)
+#model.fit(independ, depend, epochs=10)
 prediction = model.predict(independ)
-print(prediction)
+#print(prediction)
+
+#prediction = model.predict([[30]])
+#print("when 30 : ", prediction)
+xysis = []
+yysis = []
+index = 0
+for x in prediction:
+    xysis.append(x)
+    index += 1
+    yysis.append(index)
+
+
+
+#x-sis should price and y-yis should tge prediction value
+plt.plot(xysis, yysis, 'ro')
+#plt.axis([0, 6, 0, 20])
+plt.show()
