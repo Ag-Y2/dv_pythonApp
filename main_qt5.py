@@ -41,10 +41,8 @@ class MyWindow(QWidget):
     self.pushButton1.clicked.connect(self.pbc1_draw_oncanve)
     self.pushButton_settext = QPushButton("set text")
     self.pushButton_settext.clicked.connect(self.pushButton_pushButton_settext_click)
-  
-
-    
-
+    self.pushButton_compare = QPushButton("compare list")
+    self.pushButton_compare.clicked.connect(self.pushButton_compare_click)
 
     self.fig = plt.Figure()
     self.canvas = FigureCanvas(self.fig)
@@ -54,11 +52,11 @@ class MyWindow(QWidget):
     #self.tableWidget.setGeometry(100, 200, 1400, 1400)
     self.tableWidget.setRowCount(1)
     self.tableWidget.setColumnCount(5)
-    self.tableWidget.setItem(0,0, QTableWidgetItem('c1'))
-    self.tableWidget.setItem(0,1, QTableWidgetItem('c2'))
-    self.tableWidget.setItem(0,2, QTableWidgetItem('c3'))
-    self.tableWidget.setItem(0,3, QTableWidgetItem('c4'))
-    self.tableWidget.setItem(0,4, QTableWidgetItem('c5'))
+    self.tableWidget.setItem(0,0, QTableWidgetItem('12997207'))
+    self.tableWidget.setItem(0,1, QTableWidgetItem('80963432'))
+    self.tableWidget.setItem(0,2, QTableWidgetItem('87702237'))
+    self.tableWidget.setItem(0,3, QTableWidgetItem('74744835'))
+    self.tableWidget.setItem(0,4, QTableWidgetItem('87702237'))
     self.tableWidget.doubleClicked.connect(self.tableW_doub_click)
 
     leftLayout = QVBoxLayout()
@@ -75,6 +73,7 @@ class MyWindow(QWidget):
     rightLayout.addWidget(self.pushButton)
     rightLayout.addWidget(self.pushButton1)
     rightLayout.addWidget(self.pushButton_settext)
+    rightLayout.addWidget(self.pushButton_compare)
     rightLayout.addStretch(1)
 
     layout = QHBoxLayout()
@@ -86,6 +85,26 @@ class MyWindow(QWidget):
     self.setLayout(layout)
   ###########setupUI###########
 
+  def pushButton_compare_click(self):
+    print('compare btn click')
+    countrow = self.tableWidget.rowCount()
+    countcolumn = self.tableWidget.columnCount()
+    for y in range(countcolumn):
+      if countrow > 1:
+        for x in range(countrow):
+          cell = self.tableWidget.item(x, y)
+          if cell is None:
+            continue
+          else:
+            print(cell.text())
+      else:
+        cell = self.tableWidget.item(countrow - 1, y)
+        if cell is None:
+          continue
+        else:
+          print(cell.text())
+
+  ##############
   def tableW_doub_click(self):
     row = self.tableWidget.currentIndex().row()
     column = self.tableWidget.currentIndex().column()

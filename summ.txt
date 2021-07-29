@@ -1,3 +1,8 @@
 pip install pyinstaller  
 
  pyinstaller .\main_qt5.py
+
+
+pip install --upgrade tensorflow
+
+pip install pandas
