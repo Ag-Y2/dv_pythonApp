@@ -2,6 +2,13 @@
 import pymysql
 from _gui import *
 
+from lib.config.keys import (
+    DEFAULT_USER_ID,
+    DEFAULT_USER_PW,
+    DEFAULT_HOST,
+    DEFAULT_DB,
+)
+
 def db_con_stat():
     print('db con stat test')
 
@@ -17,10 +24,10 @@ def db_connect(sql):
     cur = None
     global data_array
 
-    _host = "db.marketb.kr"
-    _user = "marketb"
-    _password = "akzptql1!"
-    _db = "marketb"#"wms"
+    _host = DEFAULT_HOST
+    _user = DEFAULT_USER_ID
+    _password = DEFAULT_USER_PW
+    _db = DEFAULT_DB
     _charset = "utf8"
 
     conn = pymysql.connect(host=_host,user=_user,password=_password,db=_db, charset=_charset)
